@@ -1,0 +1,131 @@
+<!doctype html>
+<html>
+
+<head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+	<!-- Global site tag (gtag.js) - Google Analytics -->
+	<script async src="https://www.googletagmanager.com/gtag/js?id=UA-146742162-1"></script>
+	<script>
+	  window.dataLayer = window.dataLayer || [];
+	  function gtag(){dataLayer.push(arguments);}
+	  gtag('js', new Date());
+	
+	  gtag('config', 'UA-146742162-1');
+	</script>
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+	    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+    <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+    <script src="http://code.jquery.com/color/jquery.color-2.1.2.js"></script>
+	<script src="draw.js"></script>
+	
+	<link rel="stylesheet" href="paulTischSite.css">	<style>
+	#can{
+/* 		position: absolute; */
+		border: 2px solid;
+	}
+	
+	.colorBox{
+	width: 10px;
+	height: 10px;
+	position: relative;
+	bottom: 0px;
+	}
+
+	#color_container{
+/* 		position: fixed; */
+		bottom: 10px;
+		left: 50px;
+	}
+	.butto{
+	background-color: #B9B9B9;
+	box-shadow: none;
+	border:none;
+	color: #272727;
+	font-family: "Helvetica";
+	font-weight: 600;
+	padding: 3px 5px;
+	text-align: center;
+	text-decoration: none;
+	display: inline-block;
+	font-size: 14px;
+	margin: 4px 2px;
+	cursor: pointer;
+	
+	-webkit-transition-duration: 0.4s;
+	transition-duration: 0.4s;
+}
+
+.butto:hover{
+	background-color: #94B7D8;
+}
+
+select{
+	background-color: transparent;
+	-webkit-transition-duration: 0.4s;
+	transition-duration: 0.4s;
+}
+select:hover{
+	background-color: #94B7D8;
+}
+.homeLinks{
+	font-size: 25px;
+}
+	</style>
+	
+	<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
+	<title>Magic Drawing Pad</title>
+</head>
+
+<body onload="init()">
+
+	<p class="display-1">Magic Drawing Pad</p>
+	<h2>&copy;2019 Paul Tisch</h2>
+	<br><br>
+	<div class="homeLinks">
+		<a href="webDesign.html" class="footlinks">Back to Web Design</a><br><br>
+		<a href="index.html" class="footlinks">Home</a>
+	</div>
+	
+    <br><br>
+    Click to draw, or use buttons to generate images.  H to show/hide options.
+    <div id="color_container">
+    	Symmetry mode: <input id="symmetryMode" type="checkbox" checked onchange="symmetryOnOff()">
+    	<br>
+    	Erase last drawing: <input id="checkErase" type="checkbox" checked onchange="checkErase()">
+    	<br><br>
+    	Canvas width: <input id="usrWdth" type="number" value=1200 minimum=1 maximum=24000>
+    	Canvas height: <input id="usrHgt" type="number" value=800 minimum=1 maximum=24000>
+    	<br>
+    	<input type="button" class="butto" value="Set Canvas Size" id="size" size="23" onclick="resize()">
+    	<input type="button" class="butto" value="Fit to Window" id="size" size="23" onclick="resizeToWindow()"> (Please press one of these after resizing window)
+    	<br><br>
+    	Color: <input type="color" id="colorPicker" name="color" value="#e66465" onchange="color(this)">
+    	Random colors: <input id="checkRandomColors" type="checkbox" onchange="checkRandomColors()">
+    	<br>
+    	Color path length: <input id="colorLength" type="number" value=100 minimum=1 maximum=1000000 onchange="colorLength()">
+	    Line width: <input id="lineWidth" type="number" value=1 minimum=1 maximum=100 onchange="changeY()">
+	    <br><br>
+	    Random count: <input id="randomCnt" type="number" value=5000 minimum=1 maximum=5000>
+	    Random walk step size: <input id="randomStep" type="number" value=1 minimum=1 maximum=20>
+	    <br>
+	    Animate: <input id="checkAnimate" type="checkbox" checked onchange="checkAnimate()">
+	    Drawing rate (ms): <input id="drawRate" type="number" value=10 minimum=1 maximum=1000>
+	    <br>
+	</div>
+	<div>
+	    <input type="button" class="butto" value="Random Walk" id="btn" size="30" onclick="randomWalk()">
+	    <input type="button" class="butto" value="Random Scatter" id="btn" size="30" onclick="randomScatter()">
+	    <input type="button" class="butto" value="Random Lines" id="btn" size="30" onclick="randomLines()">
+	    <br><br>
+	    <input type="button" class="butto" value="Save" id="btn" size="30" onclick="save()">
+	    <input type="button" class="butto" value="Clear" id="clr" size="23" onclick="erase()">
+	</div>
+</body>
+
+
+</html>
